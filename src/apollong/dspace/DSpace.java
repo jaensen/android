@@ -78,11 +78,14 @@ public class DSpace extends Activity {
                 LocationService serviceInstance = serviceBinder.getService();
 
                 try {
-                    _locationService.start();
+                    serviceInstance.start();
                 } catch (GpsNotReadyException ex) {
                     showSettingsAlert();
                 }
+
                 _startButton.setVisibility(View.GONE);
+
+                _webView.addJavascriptInterface(new JsApi(serviceInstance), "HostLocationService");
                 _webView.loadUrl(_url);
             }
 
